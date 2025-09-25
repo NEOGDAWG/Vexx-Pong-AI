@@ -34,6 +34,6 @@ while True:
 
 
     if done:
-        state = env.reset()
+        state = env.reset() 
     
 
