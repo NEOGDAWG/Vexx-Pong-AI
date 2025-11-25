@@ -68,6 +68,11 @@ class PongGame:
     
 
     def step(self, actionAi, action_player): # action = 0 (stay), 1 (up), 2 (down)
+        # Temp
+        if (self.ballVel[0] >= 0):
+            self.ballVel[0] = 6
+        else:
+            self.ballVel[0] = -6
         # Store previous positions for reward calculation
         prevBallX = self.ball.x
         prevAiCenter = self.ai.y + self.ai.height // 2
@@ -94,7 +99,7 @@ class PongGame:
         reward = 0.0
         if self.ball.colliderect(self.ai):
             # Classic Pong physics: X velocity stays constant, only Y changes based on hit position
-            self.ballVel[0] = -4 if self.ballVel[0] > 0 else 4  # Keep X speed constant at 4
+            self.ballVel[0] = -6 if self.ballVel[0] > 0 else 6  # Keep X speed constant at 4
             # Where on the paddle the ball hit (-1 to 1)
             relativeIntersectY = (self.ai.y + self.ai.height / 2) - (self.ball.y + self.ball.height / 2)
             normalizedIntersectY = relativeIntersectY / (self.ai.height / 2)
@@ -105,7 +110,7 @@ class PongGame:
             reward += self.hit_ball_reward
         elif self.ball.colliderect(self.player):
             # Classic Pong physics: X velocity stays constant, only Y changes based on hit position
-            self.ballVel[0] = -4 if self.ballVel[0] > 0 else 4  # Keep X speed constant at 4
+            self.ballVel[0] = -6 if self.ballVel[0] > 0 else 6  # Keep X speed constant at 4
             relativeIntersectY = (self.player.y + self.player.height / 2) - (self.ball.y + self.ball.height / 2)
             normalizedIntersectY = relativeIntersectY / (self.player.height / 2)
             normalizedIntersectY = max(-1, min(1, normalizedIntersectY))
